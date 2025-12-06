@@ -1,105 +1,178 @@
 // app.js
 
-// questions.js에서 QUESTIONS 사용
-let questions = [...QUESTIONS];
+// questions.js에서 QUESTIONS 사용 (전역)
+const QUESTIONS_SOURCE =
+  (typeof QUESTIONS !== "undefined" && Array.isArray(QUESTIONS))
+    ? QUESTIONS
+    : [];
 
+// DOM 요소
 const card = document.getElementById("card");
 const prefixEl = document.getElementById("sentencePrefix");
 const suffixEl = document.getElementById("sentenceSuffix");
 const meaningEl = document.getElementById("meaning");
-const patternBeforeEl = document.getElementById("patternBefore");
-const patternAfterEl = document.getElementById("patternAfter");
-const caretEl = document.getElementById("caret");
-const answerInput = document.getElementById("answerInput");
+const slotsContainer = document.getElementById("slotsContainer");
 const statusEl = document.getElementById("status");
 const progressEl = document.getElementById("progress");
 const scoreEl = document.getElementById("score");
 const skipBtn = document.getElementById("skipBtn");
 const resetBtn = document.getElementById("resetBtn");
-const enterBtn = document.getElementById("enterBtn"); // 🔹 이 줄 추가
 
-
+// 상태값
+let questions = [];
 let currentIndex = 0;
 let correctCount = 0;
 let wrongCount = 0;
 
-// 언더바 패턴용
-let patternChars = []; // ["_","_","_"," ","_","_","_", ...]
-let totalSlots = 0;
+// 한 글자 박스 정보
+let slots = [];      // [{ isSpace: true/false }]
+let totalSlots = 0;  // 실제 글자(공백 제외) 수
+let typedRaw = "";   // 사용자가 지금까지 친 문자열
+let finished = false;
+let currentAnswer = "";
 
-// 배열 섞기 (랜덤 순서)
+// -------------------- 유틸 & 세션 문제 선택 --------------------
+
+// 배열 섞기
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
-shuffle(questions);
 
-// "our very own" → "___ ___ ___"
-function buildPatternFromAnswer(answer) {
-  const words = answer.trim().split(/\s+/);
-  const wordPatterns = words.map(w => "_".repeat(w.length));
-  return wordPatterns.join(" ");
+// 세션용 문제 10개 (질문이 10개 미만이면 전체 사용)
+function pickSessionQuestions(limit = 10) {
+  const copy = [...QUESTIONS_SOURCE];
+  shuffle(copy);
+  const realLimit = Math.min(limit, copy.length);
+  return copy.slice(0, realLimit);
 }
 
+// 문자열 정규화
+function normaliseBase(str) {
+  return (str || "")
+    .toLowerCase()
+    .replace(/[’‘]/g, "'")    // 따옴표 통일
+    .replace(/[^a-z\s]/g, "") // 알파벳 + 공백만 허용
+    .trim()
+    .replace(/\s+/g, " ");    // 여러 칸 → 한 칸
+}
+
+// 공백 유지 버전
+function normaliseWithSpace(str) {
+  return normaliseBase(str);
+}
+
+// 공백 제거 버전 (띄어쓰기 없어도 정답 인정용)
+function normaliseWithoutSpace(str) {
+  return normaliseBase(str).replace(/\s+/g, "");
+}
+
+// -------------------- 패턴(언더바) 세팅 --------------------
+
+// 정답 문자열로부터 슬롯 구조 만들기
 function setupPattern(answer) {
-  const pattern = buildPatternFromAnswer(answer);
-  patternChars = pattern.split("");
-  totalSlots = answer.replace(/\s/g, "").length;
-}
+  currentAnswer = answer || "";
+  slots = [];
+  totalSlots = 0;
 
-// inputValue 기준으로 before / after 분리해서 그리기
-function renderPattern(inputValue) {
-  const typed = inputValue.replace(/\s/g, "");
-  const caretSlotIndex = Math.min(typed.length, totalSlots);
-
-  let before = "";
-  let after = "";
-  let slotCounter = 0;
-
-  for (let i = 0; i < patternChars.length; i++) {
-    const baseChar = patternChars[i];
-
-    if (baseChar === " ") {
-      // 단어 사이 공백
-      if (slotCounter < caretSlotIndex) before += " ";
-      else after += " ";
-    } else {
-      // 실제 글자 자리
-      let outChar;
-      if (slotCounter < typed.length) {
-        outChar = typed[slotCounter]; // 이미 친 글자
-      } else {
-        outChar = "_"; // 아직 안 친 자리
-      }
-
-      if (slotCounter < caretSlotIndex) before += outChar;
-      else after += outChar;
-
-      slotCounter++;
-    }
+  const trimmed = currentAnswer.trim();
+  if (!trimmed) {
+    slotsContainer.innerHTML = "";
+    return;
   }
 
-  patternBeforeEl.textContent = before;
-  patternAfterEl.textContent = after;
+  const words = trimmed.split(/\s+/);
+
+  words.forEach((word, wi) => {
+    for (let i = 0; i < word.length; i++) {
+      slots.push({ isSpace: false });
+      totalSlots++;
+    }
+    if (wi < words.length - 1) {
+      slots.push({ isSpace: true }); // 단어 사이 시각적 공백
+    }
+  });
+
+  typedRaw = "";
 }
 
-// 문제 세팅
+// 현재 typedRaw를 기준으로 슬롯 렌더링
+function renderSlots() {
+  const typed = typedRaw.replace(/\s/g, ""); // 공백 제거
+  const caretIndex = Math.min(typed.length, totalSlots);
+
+  slotsContainer.innerHTML = "";
+  let letterIndex = 0;
+
+  slots.forEach((slot) => {
+    const span = document.createElement("span");
+
+    if (slot.isSpace) {
+      span.className = "char-slot space-slot";
+      span.textContent = "";
+    } else {
+      span.className = "char-slot";
+
+      if (letterIndex < typed.length) {
+        span.textContent = typed[letterIndex];
+      } else {
+        span.textContent = "_";
+      }
+
+      if (letterIndex === caretIndex) {
+        span.classList.add("caret-slot");
+      }
+
+      letterIndex++;
+    }
+
+    slotsContainer.appendChild(span);
+  });
+}
+
+// 정답 전체를 슬롯 스타일로 보여주기 (폰트/스타일 동일)
+function renderFullAnswer(answer) {
+  const text = answer || "";
+  slotsContainer.innerHTML = "";
+
+  const trimmed = text.trim();
+  if (!trimmed) return;
+
+  const words = trimmed.split(/\s+/);
+
+  words.forEach((word, wi) => {
+    for (let i = 0; i < word.length; i++) {
+      const span = document.createElement("span");
+      span.className = "char-slot";
+      span.textContent = word[i];
+      slotsContainer.appendChild(span);
+    }
+    if (wi < words.length - 1) {
+      const spaceSpan = document.createElement("span");
+      spaceSpan.className = "char-slot space-slot";
+      spaceSpan.textContent = "";
+      slotsContainer.appendChild(spaceSpan);
+    }
+  });
+}
+
+// -------------------- 문제 세팅/진행 --------------------
+
 function setSentence(q) {
+  if (!q) return;
+
   wrongCount = 0;
+  typedRaw = "";
+  finished = false;
 
   prefixEl.textContent = q.prefix || "";
   suffixEl.textContent = q.suffix || "";
   meaningEl.textContent = q.meaning || "";
 
   setupPattern(q.answer);
-  renderPattern("");   // 아직 입력 없음
-  caretEl.style.display = "inline";
-
-  answerInput.value = "";
-  answerInput.disabled = false;
-  answerInput.focus();
+  renderSlots();
 
   statusEl.textContent = "";
   statusEl.className = "status";
@@ -108,56 +181,47 @@ function setSentence(q) {
   scoreEl.textContent = `Score: ${correctCount}`;
 }
 
-function normalise(str) {
-  return str.trim().replace(/\s+/g, " ").toLowerCase();
-}
-
-// 입력할 때마다 패턴 업데이트
-function handleInput() {
-  const raw = answerInput.value;
-  renderPattern(raw);
-}
-
 // 다음 문제
 function nextQuestion() {
   currentIndex++;
   if (currentIndex >= questions.length) {
-    const total = questions.length; // 전체 문장 개수
-
+    const total = questions.length;
+    finished = true;
     progressEl.textContent = "Done";
-    statusEl.innerHTML = 
+    statusEl.innerHTML =
       `모든 문장을 다 쳤어요. 오늘의 You Buddy 세션 끝!<br>` +
       `오늘의 점수는? 두구두구두구 ${total}개 중 ${correctCount}점!`;
     statusEl.className = "status correct";
-
-    answerInput.disabled = true;
-    caretEl.style.display = "none";
     return;
   }
   setSentence(questions[currentIndex]);
 }
 
-
 // 정답 보여주고 자동 다음
 function revealAndNext() {
+  if (finished) return;
   const q = questions[currentIndex];
-  patternBeforeEl.textContent = q.answer;
-  patternAfterEl.textContent = "";
-  caretEl.style.display = "none";
+  if (!q) return;
 
-  statusEl.textContent = `정답: "${q.answer}"`;
+  renderFullAnswer(q.answer);
+  statusEl.innerHTML = `정답: <span class="status-answer">${q.answer}</span>`;
   statusEl.className = "status";
+  finished = true;
 
   setTimeout(nextQuestion, 1200);
 }
 
-// Enter로 정답 체크
+// 정답 체크 (띄어쓰기 있어도 / 없어도 둘 다 정답 인정)
 function checkAnswer() {
-  const q = questions[currentIndex];
-  const user = normalise(answerInput.value);
-  const correct = normalise(q.answer);
+  if (finished) return;
+  if (!questions.length) return;
 
-  if (!user) {
+  const userWithSpace = normaliseWithSpace(typedRaw);
+  const userNoSpace = normaliseWithoutSpace(typedRaw);
+  const correctWithSpace = normaliseWithSpace(currentAnswer);
+  const correctNoSpace = normaliseWithoutSpace(currentAnswer);
+
+  if (!userWithSpace) {
     statusEl.textContent = "먼저 표현을 한 글자라도 입력해 주세요.";
     statusEl.className = "status wrong";
     card.classList.add("shake");
@@ -165,12 +229,17 @@ function checkAnswer() {
     return;
   }
 
-  if (user === correct) {
+  const isCorrect =
+    userWithSpace === correctWithSpace ||
+    userNoSpace === correctNoSpace;
+
+  if (isCorrect) {
     correctCount++;
     statusEl.textContent = "딩! 맞았습니다. 다음 문장으로 넘어갈게요.";
     statusEl.className = "status correct";
     card.classList.add("flash");
     scoreEl.textContent = `Score: ${correctCount}`;
+    finished = true;
 
     setTimeout(() => {
       card.classList.remove("flash");
@@ -189,36 +258,98 @@ function checkAnswer() {
   }
 }
 
-answerInput.addEventListener("input", handleInput);
-answerInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    checkAnswer();
-  }
-});
-enterBtn.addEventListener("click", () => {
-  checkAnswer();
-});
+// -------------------- Reset --------------------
 
 function resetAll() {
-  // 원본 QUESTIONS에서 다시 새 배열 만들고 섞기
-  questions = [...QUESTIONS];
-  shuffle(questions);
-
+  questions = pickSessionQuestions(10);
   currentIndex = 0;
   correctCount = 0;
   wrongCount = 0;
+  finished = false;
+  typedRaw = "";
+  currentAnswer = "";
 
-  scoreEl.textContent = "Score: 0";
   statusEl.textContent = "";
   statusEl.className = "status";
+  scoreEl.textContent = "Score: 0";
 
-  setSentence(questions[0]);  // 첫 문제 다시 세팅
+  if (!questions.length) {
+    prefixEl.textContent = "";
+    suffixEl.textContent = "";
+    meaningEl.textContent = "";
+    slotsContainer.innerHTML = "";
+    progressEl.textContent = "";
+    statusEl.textContent =
+      "질문 데이터가 로드되지 않았어요. questions.js 경로를 확인해 주세요.";
+    return;
+  }
+
+  setSentence(questions[0]);
 }
 
+// -------------------- 키보드 입력 --------------------
 
+function handleKey(e) {
+  if (!questions.length) return;
+  if (currentIndex >= questions.length) return;
+
+  const key = e.key;
+  const code = e.code;
+
+  // 단축키 등은 무시 (command, ctrl, alt 조합)
+  if (e.metaKey || e.ctrlKey || e.altKey) {
+    return;
+  }
+
+  // Enter → 정답 체크
+  if (key === "Enter") {
+    e.preventDefault();
+    checkAnswer();
+    return;
+  }
+
+  // Backspace → 마지막 글자 삭제
+  if (key === "Backspace") {
+    e.preventDefault();
+    if (!typedRaw) return;
+    typedRaw = typedRaw.slice(0, -1);
+    finished = false;
+    renderSlots();
+    return;
+  }
+
+  // 지금까지 입력한 글자 수(공백 제외)
+  const lettersCount = typedRaw.replace(/\s/g, "").length;
+  if (lettersCount >= totalSlots) {
+    // 슬롯 초과되면 더 못 치게
+    return;
+  }
+
+  // 스페이스
+  if (key === " ") {
+    e.preventDefault();
+    typedRaw += " ";
+    finished = false;
+    renderSlots();
+    return;
+  }
+
+  // ✅ 한글/영문 상관없이 "키보드 물리 위치" 기준으로 알파벳 처리
+  // 예: code === "KeyA" → 'a'
+  if (code && code.startsWith("Key")) {
+    e.preventDefault();
+    const letter = code.slice(3).toLowerCase(); // A,B,C → a,b,c
+    typedRaw += letter;
+    finished = false;
+    renderSlots();
+  }
+}
+
+// -------------------- 이벤트 연결 & 시작 --------------------
+
+document.addEventListener("keydown", handleKey);
+skipBtn.addEventListener("click", revealAndNext);
 resetBtn.addEventListener("click", resetAll);
 
-skipBtn.addEventListener("click", revealAndNext);
-
-// 첫 문제 시작
-setSentence(questions[currentIndex]);
+// 시작
+resetAll();

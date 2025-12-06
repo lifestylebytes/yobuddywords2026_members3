@@ -2,72 +2,66 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>You Buddy 2025 단어 테스트 </title>
+  <title>You Buddy 2025 단어 테스트</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="card" id="card">
+
+    <!-- 상단 헤더 -->
     <div class="top-row">
-      
-    <a
-      href="https://apple-libra-6af.notion.site/2025-50-2ab1fc05de1e80a68e5fca2e9ae97ead?source=copy_link"
-      target="_blank"
-      class="badge-link"
-    >
-      <div class="badge">
-        <div class="badge-avatar">YB</div>
-        <div class="badge-text">
-          <span>You Buddy English</span>
-          <span> 🔗 영어단어 챌린지 신청하기 </span>
-        </div>
+      <div class="left-header">
+        <div class="members-tag">*members only</div>
+
+        <a
+          href="https://apple-libra-6af.notion.site/2025buddywords?v=2ab1fc05de1e80f3a22e000c06858e59&source=copy_link"
+          target="_blank"
+          class="badge-link"
+        >
+          <div class="badge">
+            <div class="badge-avatar">YB</div>
+            <div class="badge-text">
+              <span>You Buddy English</span>
+              <span>📎 유버디 단어장 바로가기</span>
+            </div>
+          </div>
+        </a>
       </div>
-    </a>
 
+      <!-- Reset 버튼 -->
+      <button class="mode-pill" id="resetBtn" type="button">
+        <div class="mode-dot"></div>
+        <span>Reset</span>
+      </button>
+    </div>
+    <!-- /.top-row -->
 
-    <button class="mode-pill" id="resetBtn" type="button">
-      <div class="mode-dot"></div>
-      <span>Reset</span>
-    </button>
-
-    </div> <!-- /.top-row -->
-
+    <!-- 문장 + 타이핑 슬롯 -->
     <div class="sentence-card">
       <div class="sentence-line">
         <span class="sentence-prefix" id="sentencePrefix"></span>
+
         <span class="answer-pill">
-          <span class="answer-visual-inner">
-            <span id="patternBefore"></span>
-            <span id="caret">|</span>
-            <span id="patternAfter"></span>
-          </span>
+          <!-- 각 글자를 “한 칸짜리 박스”로 렌더링할 컨테이너 -->
+          <span class="answer-visual-inner" id="slotsContainer"></span>
         </span>
+
         <span class="sentence-suffix" id="sentenceSuffix"></span>
       </div>
+
       <div class="meaning" id="meaning"></div>
     </div>
 
+    <!-- 하단: 정답 보기 + 안내문 (같은 단계) -->
     <div class="bottom-row">
-      <div class="input-shell">
-        <div class="input-inner">
-          <div class="prompt-dot"></div>
-          <input
-            type="text"
-            id="answerInput"
-            placeholder="여기에 영어 표현을 입력하고 Enter를 눌러보세요"
-            autocomplete="off"
-          />
-        </div>
-      </div>
-
-      <!-- Enter 버튼 -->
-      <button class="btn enter-btn" id="enterBtn">Enter</button>
-
-      <!-- 정답 보기 버튼 -->
       <button class="btn" id="skipBtn">정답 보기</button>
     </div>
+    <p class="typing-hint">
+      화면의 빈칸에 바로 타이핑하고 Enter를 눌러보세요
+    </p>
 
-
+    <!-- 상태/메타 -->
     <div class="status" id="status"></div>
     <div class="meta">
       <span id="progress"></span>
@@ -80,4 +74,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-
