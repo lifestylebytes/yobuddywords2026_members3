@@ -299,7 +299,7 @@ function showResultPopup() {
   title.textContent = "[복습할 단어]";
   list.appendChild(title);
   list.appendChild(document.createElement("br"));
-  
+
   if (wrongWords.length > 0) {
     wrongWords.forEach(w => {
       const li = document.createElement("li");
@@ -318,7 +318,7 @@ function showResultPopup() {
 // -------------------- Reset --------------------
 
 function resetAll() {
-  questions = pickSessionQuestions(2);
+  questions = pickSessionQuestions(10);
   currentIndex = 0;
   correctCount = 0;
   wrongCount = 0;
