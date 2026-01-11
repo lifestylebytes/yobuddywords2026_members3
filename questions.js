@@ -61,7 +61,7 @@ const QUESTIONS = [
     answer: "lag behind",
     prefix: "The documentation is",
     suffix: "the actual work.",
-    meaning: "뒤처지다",
+    meaning: "9. 뒤처지다",
     translation: "문서가 실제 작업보다 뒤처져 있어요.",
     addedDate: "2026-01-10"
   },
@@ -149,7 +149,7 @@ const QUESTIONS = [
     answer: "might be redundant",
     prefix: "",
     suffix: ", I’ll share it again.",
-    meaning: "이미 들은 내용일 수도 있지만",
+    meaning: "10. 이미 들은 내용일 수도 있지만,",
     translation: "이미 들으셨을 수도 있지만 다시 공유할게요.",
     addedDate: "2026-01-11"
   },
