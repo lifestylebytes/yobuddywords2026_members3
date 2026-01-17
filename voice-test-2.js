@@ -555,9 +555,6 @@ async function checkMicPermission() {
 
 renderDebug();
 checkMicPermission();
-  const ua = navigator.userAgent || "unknown";
-  debugStatusEl.textContent = `[debug] ${message} | UA: ${ua}`;
-}
 
 // -------------------- Reset --------------------
 
