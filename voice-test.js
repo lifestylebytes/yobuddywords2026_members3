@@ -10,10 +10,24 @@ function getTodayKST() {
 const TODAY = getTodayKST();
 
 // questions.js에서 QUESTIONS 사용 (전역)
-const QUESTIONS_SOURCE =
-  (typeof QUESTIONS !== "undefined" && Array.isArray(QUESTIONS))
-    ? QUESTIONS
-    : [];
+const QUESTIONS_SOURCE = [
+  {
+    answer: "get the ball rolling",
+    prefix: "We’ll",
+    suffix: "on this as our first project in 2026.",
+    meaning: "일을 시작하다 / 본격적으로 착수하다",
+    translation: "2026년에 첫 프로젝트로 이걸 시작할게요.",
+    addedDate: "2026-01-01"
+  },
+  {
+    answer: "key takeaway",
+    prefix: "The",
+    suffix: "from this meeting is alignment.",
+    meaning: "핵심 요점",
+    translation: "이번 미팅의 핵심 요점은 정렬입니다.",
+    addedDate: "2026-01-01"
+  }
+];
 
 const AVAILABLE_QUESTIONS = QUESTIONS_SOURCE.filter(
   q => q.addedDate && q.addedDate <= TODAY
@@ -521,7 +535,8 @@ function renderDebug() {
     `UA: ${ua}`,
     `secureContext=${window.isSecureContext}`,
     `SpeechRecognition=${srSupported}`,
-    `getUserMedia=${gumSupported}`
+    `getUserMedia=${gumSupported}`,
+    `questions=${QUESTIONS_SOURCE.length}`
   ];
   debugLog.forEach((msg) => lines.push(`[debug] ${msg}`));
   debugStatusEl.textContent = lines.join("\n");
