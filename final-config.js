@@ -1,5 +1,5 @@
 // final-config.js
 
 window.FINAL_CONFIG = {
-  submitEndpoint: ""
+  submitEndpoint: "/api/submit-final"
 };
