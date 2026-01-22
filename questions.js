@@ -18,7 +18,7 @@ const QUESTIONS = [
     addedDate: "2026-01-02"
   },
   {
-    answer: "stall out",
+    answer: "stalled out",
     prefix: "The decision seems to have",
     suffix: ".",
     meaning: "21. 의사결정이 정체되다",
@@ -109,7 +109,7 @@ const QUESTIONS = [
     answer: "get traction",
     prefix: "This proposal hasn’t really",
     suffix: "yet.",
-    meaning: "19. 논의를 본궤도로 올리다",
+    meaning: "19. 본격적으로 시작하다",
     translation: "아직 이 안건은 논의가 본격화되지 않았어요.",
     addedDate: "2026-01-20"
   },
@@ -171,10 +171,10 @@ const QUESTIONS = [
   },
   {
     answer: "kick the can down the road",
-    prefix: "We keep",
+    prefix: "That team tends to",
     suffix: "instead of addressing the root issue.",
     meaning: "28. 결정을 미루다 / 차일피일 넘기다",
-    translation: "근본 해결 없이 결정을 계속 미루고 있어요.",
+    translation: "그 팀은 근본 문제를 해결하는 대신 계속 결정을 미루는 경향이 있습니다.",
     addedDate: "2026-01-29"
   },
   {
@@ -198,7 +198,7 @@ const QUESTIONS = [
     prefix: "This task",
     suffix: "during the handoff.",
     meaning: "22. 완전히 빠져 있다",
-    translation: "이 이슈가 아무도 챙기지 않아 빠졌어요.",
+    translation: "이 업무는 인계할 때 (완전히) 빠질 때가 있어요.",
     addedDate: "2026-01-23"
   },
   {
@@ -238,7 +238,7 @@ const QUESTIONS = [
     prefix: "This is starting to feel like",
     suffix: ".",
     meaning: "24. 일의 범위를 슬금슬금 늘리다",
-    translation: "요구사항이 점점 늘고 있어요.",
+    translation: "이거 요구사항이 점점 늘어나는 것 같은데요.",
     addedDate: "2026-01-25"
   }
 ];
