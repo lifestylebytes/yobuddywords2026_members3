@@ -568,7 +568,8 @@ function renderFullReview(data, answersSource) {
         <div class="review-title">${number}. ${item.sentence}</div>
         <div class="review-row">
           <div>정답 여부: <span class="${correct ? "correct" : "wrong"}">${correct ? "정답" : "오답"}</span></div>
-          <div>답안은 비공개입니다.</div>
+          <div>내 답: <span class="${correct ? "correct" : "wrong"}">${escapeHTML(userAnswer || "(미작성)")}</span></div>
+          <div>정답: <span class="correct">${escapeHTML(item.answer)}</span></div>
         </div>
       `;
     }
@@ -587,7 +588,8 @@ function renderFullReview(data, answersSource) {
       <div class="review-title">${number}. ${item.prompt}</div>
       <div class="review-row">
         <div>정답 여부: <span class="${correct ? "correct" : "wrong"}">${correct ? "정답" : "오답"}</span></div>
-        <div>답안은 비공개입니다.</div>
+        <div>내 답: <span class="${correct ? "correct" : "wrong"}">${escapeHTML(userAnswer || "(미작성)")}</span></div>
+        <div>모범 답안: <span class="correct">${escapeHTML(model)}</span></div>
       </div>
     `;
     fullReview.appendChild(row);
