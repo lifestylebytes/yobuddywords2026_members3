@@ -84,7 +84,8 @@ function normaliseWithSpace(str) {
 
 // 공백 제거 (띄어쓰기 없이 쳐도 정답 인정용)
 function normaliseWithoutSpace(str) {
-  return normaliseBase(str).replace(/[\s-]/g, "");
+  // remove spaces, hyphens and apostrophes so "I've" == "ive"
+  return normaliseBase(str).replace(/[\s\-']/g, "");
 }
 
 // -------------------- 패턴(언더바) 세팅 --------------------
