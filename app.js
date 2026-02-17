@@ -212,8 +212,14 @@ function setSentence(q) {
   const suffixText = q.suffix || "";
   const prefixText = (q.prefix || "").trim();
   if (suffixText && prefixText && /^[\.,!\?:;~\-]/.test(suffixText.trim())) {
-    prefixEl.textContent = `${prefixText}${suffixText}`;
-    suffixEl.textContent = "";
+    // If suffix begins with punctuation, attach only the punctuation
+    // to the prefix so the blank doesn't get separated from the sentence.
+    const trimmed = suffixText.trimStart();
+    const punct = trimmed[0];
+    // remove the first punctuation character from suffix (preserve following space)
+    const newSuffix = trimmed.slice(1).replace(/^\s+/, " ").trimStart();
+    prefixEl.textContent = `${prefixText}${punct}`;
+    suffixEl.textContent = newSuffix || "";
   } else {
     prefixEl.textContent = q.prefix || "";
     suffixEl.textContent = q.suffix || "";
