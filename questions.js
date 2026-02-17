@@ -2,247 +2,175 @@
 
 const QUESTIONS = [
   {
-    "answer": "helter-skelter",
-    "prefix": "We’re all on the same project right now, so things are a little",
-    "suffix": ".",
-    "meaning": "2. 우왕좌왕 / 뒤죽박죽 / 정신없음",
-    "translation": "지금 다 같이 같은 프로젝트를 하다 보니 좀 정신없어요.",
-    "addedDate": "2026-01-03"
-  },
-  {
-    "answer": "get the ball rolling",
-    "prefix": "We’ll",
-    "suffix": "on this as our first project in 2026.",
-    "meaning": "1. 일을 시작하다 / 본격적으로 착수하다",
-    "translation": "2026년에 첫 프로젝트로 이걸 시작할게요.",
-    "addedDate": "2026-01-02"
-  },
-  {
-    "answer": "stalled out",
-    "prefix": "The decision seems to have",
-    "suffix": ".",
-    "meaning": "21. 의사결정이 정체되다",
-    "translation": "의사결정이 중간에서 멈춘 상태예요.",
-    "addedDate": "2026-01-22"
-  },
-  {
-    "answer": "see it through",
-    "prefix": "Let’s",
-    "suffix": "once we commit.",
-    "meaning": "27. 논리를 끝까지 밀고 가다",
-    "translation": "중간에 포기하지 말고 끝까지 가야 해요.",
-    "addedDate": "2026-01-28"
-  },
-  {
-    "answer": "warrants further review",
-    "prefix": "This issue",
-    "suffix": ".",
-    "meaning": "13. 추가 검토가 필요하다",
-    "translation": "이 이슈는 추가 검토가 필요해 보여요.",
-    "addedDate": "2026-01-14"
-  },
-  {
-    "answer": "get a clear read on",
-    "prefix": "I want to",
-    "suffix": "the timeline before committing.",
-    "meaning": "5. 상황을 명확히 파악하다",
-    "translation": "확정하기 전에 일정 상황을 명확히 파악하고 싶어요.",
-    "addedDate": "2026-01-06"
-  },
-  {
-    "answer": "false premise",
-    "prefix": "The argument is built on a",
-    "suffix": ".",
-    "meaning": "30. 애초에 성립하지 않는 가정",
-    "translation": "그 논의는 잘못된 전제를 바탕으로 하고 있어요.",
-    "addedDate": "2026-01-31"
-  },
-  {
-    "answer": "lag behind",
-    "prefix": "The documentation is",
-    "suffix": "the actual work.",
-    "meaning": "9. 뒤처지다",
-    "translation": "문서가 실제 작업보다 뒤처져 있어요.",
-    "addedDate": "2026-01-10"
-  },
-  {
-    "answer": "for context",
-    "prefix": "",
-    "suffix": ", this decision was made last quarter.",
-    "meaning": "12. 맥락 설명을 하자면",
-    "translation": "맥락 설명을 하자면 이 결정은 지난 분기에 내려졌어요.",
-    "addedDate": "2026-01-13"
-  },
-  {
-    "answer": "in the grand scheme of things",
-    "prefix": "",
-    "suffix": ", this delay won’t matter much.",
-    "meaning": "3. 큰 그림에서 보면 / 전체 맥락에서",
-    "translation": "큰 흐름에서 보면 이 지연은 큰 문제가 아닙니다.",
-    "addedDate": "2026-01-04"
-  },
-  {
-    "answer": "too many stakeholders",
-    "prefix": "Progress is slow because there are",
-    "suffix": ".",
-    "meaning": "26. 이해관계자가 많다",
-    "translation": "이해관계자들이 너무 많기 때문에 진행이 느립니다.",
-    "addedDate": "2026-01-27"
-  },
-  {
-    "answer": "sharpen the focus",
-    "prefix": "We need to",
-    "suffix": "before the next review.",
-    "meaning": "20. 논점을 명확히 하다",
-    "translation": "논점을 조금 더 명확히 해야 할 것 같아요.",
-    "addedDate": "2026-01-21"
-  },
-  {
-    "answer": "fix at the root",
-    "prefix": "We should",
-    "suffix": "instead of patching it.",
-    "meaning": "25. 문제를 근본적으로 해결하다",
-    "translation": "임시방편 말고 근본 해결이 필요해요.",
-    "addedDate": "2026-01-26"
-  },
-  {
-    "answer": "get traction",
-    "prefix": "This proposal hasn’t really",
-    "suffix": "yet.",
-    "meaning": "19. 본격적으로 시작하다",
-    "translation": "아직 이 안건은 논의가 본격화되지 않았어요.",
-    "addedDate": "2026-01-20"
-  },
-  {
-    "answer": "go off on a tangent",
-    "prefix": "We tend to",
-    "suffix": "during these discussions.",
-    "meaning": "29. 논점에서 벗어나다",
-    "translation": "중요한 논의 중에 자꾸 딴 얘기로 새요.",
-    "addedDate": "2026-01-30"
-  },
-  {
-    "answer": "key takeaway",
-    "prefix": "The",
-    "suffix": "from this meeting is alignment.",
-    "meaning": "11. 핵심 요점",
-    "translation": "이번 미팅의 핵심 요점은 정렬입니다.",
-    "addedDate": "2026-01-12"
-  },
-  {
-    "answer": "bottleneck",
-    "prefix": "The biggest",
-    "suffix": "right now is QA.",
-    "meaning": "6. 병목 구간 / 막히는 지점",
-    "translation": "지금 가장 큰 병목은 QA입니다.",
-    "addedDate": "2026-01-07"
-  },
-  {
-    "answer": "ease the load",
-    "prefix": "Splitting the work will",
-    "suffix": ".",
-    "meaning": "14. 부담을 줄이다",
-    "translation": "작업을 나누면 부담이 줄어요.",
-    "addedDate": "2026-01-15"
-  },
-  {
-    "answer": "might be redundant",
-    "prefix": "",
-    "suffix": ", I’ll share it again.",
-    "meaning": "10. 이미 들은 내용일 수도 있지만,",
-    "translation": "이미 들으셨을 수도 있지만 다시 공유할게요.",
-    "addedDate": "2026-01-11"
-  },
-  {
-    "answer": "on the surface",
-    "prefix": "",
-    "suffix": ", everything looks fine, but we should double-check.",
-    "meaning": "4. 겉으로 보기에는",
-    "translation": "겉으로 보기엔 괜찮아 보이지만 다시 확인해봐야 해요.",
-    "addedDate": "2026-01-05"
-  },
-  {
     "answer": "hand off",
-    "prefix": "We’ll",
-    "suffix": "this task to the next team.",
-    "meaning": "7. 작업을 인계하다",
-    "translation": "이 작업은 다음 팀에 인계할게요.",
-    "addedDate": "2026-01-08"
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-09"
   },
   {
-    "answer": "kick the can down the road",
-    "prefix": "That team tends to",
-    "suffix": "instead of addressing the root issue.",
-    "meaning": "28. 결정을 미루다 / 차일피일 넘기다",
-    "translation": "그 팀은 근본 문제를 해결하는 대신 계속 결정을 미루는 경향이 있습니다.",
-    "addedDate": "2026-01-29"
-  },
-  {
-    "answer": "push back gently",
-    "prefix": "I’d like to",
-    "suffix": "on that assumption.",
-    "meaning": "23. 조심스럽게 반대 의견을 내다",
-    "translation": "강하게는 아니지만 반대는 해야 할 것 같아요.",
-    "addedDate": "2026-01-24"
-  },
-  {
-    "answer": "build in buffer time",
-    "prefix": "Let’s",
-    "suffix": "for safety.",
-    "meaning": "15. 완충 시간을 두다",
-    "translation": "리스크 대비해서 일정에 여유를 두죠.",
-    "addedDate": "2026-01-16"
-  },
-  {
-    "answer": "fall through the cracks",
-    "prefix": "This task",
-    "suffix": "during the handoff.",
-    "meaning": "22. 완전히 빠져 있다",
-    "translation": "이 일은 인계 과정에서 틈 사이로 빠집니다.",
-    "addedDate": "2026-01-23"
-  },
-  {
-    "answer": "nitpick",
-    "prefix": "I don’t want to",
-    "suffix": ", but this could cause issues later.",
-    "meaning": "17. 사소해 보이지만 중요한 문제",
-    "translation": "사소한 부분처럼 보이지만 나중에 문제 될 수 있어요.",
-    "addedDate": "2026-01-18"
+    "answer": "by any chance",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-09"
   },
   {
     "answer": "out of scope",
-    "prefix": "That request is",
-    "suffix": "for this sprint.",
-    "meaning": "8. 범위를 벗어난",
-    "translation": "그 요청은 이번 스프린트의 범위를 벗어납니다.",
-    "addedDate": "2026-01-09"
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-09"
   },
   {
-    "answer": "scramble",
-    "prefix": "I don’t want us to",
-    "suffix": ".",
-    "meaning": "16. 막판에 허둥대다",
-    "translation": "막판에 허둥대지 않았으면 해요.",
-    "addedDate": "2026-01-17"
+    "answer": "loop in",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-10"
   },
   {
-    "answer": "skirt around",
-    "prefix": "It felt like we were",
-    "suffix": "the main issue.",
-    "meaning": "18. 말을 에둘러 하다 / 핵심을 피하다",
-    "translation": "우리가 핵심 이슈 주변만 맴도는 느낌이었습니다.",
-    "addedDate": "2026-01-19"
+    "answer": "touch base",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-10"
   },
   {
-    "answer": "scope creep",
-    "prefix": "This is starting to feel like",
-    "suffix": ".",
-    "meaning": "24. 일의 범위를 슬금슬금 늘리다",
-    "translation": "이건 범위가 슬금슬금 커지는 것처럼 느껴지기 시작합니다.",
-    "addedDate": "2026-01-25"
+    "answer": "follow up",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-10"
   },
   {
-    "answer": "유보다",
+    "answer": "That reminds me",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-11"
+  },
+  {
+    "answer": "I've been meaning to",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-11"
+  },
+  {
+    "answer": "Same old, same old",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-11"
+  },
+  {
+    "answer": "One thing to consider is",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-12"
+  },
+  {
+    "answer": "From my perspective",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-12"
+  },
+  {
+    "answer": "I might be wrong, but",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-12"
+  },
+  {
+    "answer": "tight deadline",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-13"
+  },
+  {
+    "answer": "prioritize",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-13"
+  },
+  {
+    "answer": "bandwidth",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-13"
+  },
+  {
+    "answer": "run into",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-18"
+  },
+  {
+    "answer": "tackle",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-18"
+  },
+  {
+    "answer": "work around",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-18"
+  },
+  {
+    "answer": "action items",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-19"
+  },
+  {
+    "answer": "next steps",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-19"
+  },
+  {
+    "answer": "FYI",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-19"
+  },
+  {
+    "answer": "put through",
     "prefix": "",
     "suffix": "",
     "meaning": "",
@@ -250,7 +178,23 @@ const QUESTIONS = [
     "addedDate": "2026-02-20"
   },
   {
-    "answer": "you",
+    "answer": "leave a message",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-20"
+  },
+  {
+    "answer": "get back to",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-20"
+  },
+  {
+    "answer": "sync up",
     "prefix": "",
     "suffix": "",
     "meaning": "",
@@ -258,7 +202,47 @@ const QUESTIONS = [
     "addedDate": "2026-02-23"
   },
   {
-    "answer": "유유",
+    "answer": "heads up",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-23"
+  },
+  {
+    "answer": "would you mind reviewing",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-23"
+  },
+  {
+    "answer": "inform you",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-23"
+  },
+  {
+    "answer": "look into",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-23"
+  },
+  {
+    "answer": "schedule a call",
+    "prefix": "",
+    "suffix": "",
+    "meaning": "",
+    "translation": "",
+    "addedDate": "2026-02-23"
+  },
+  {
+    "answer": "dive into",
     "prefix": "",
     "suffix": "",
     "meaning": "",
@@ -266,291 +250,19 @@ const QUESTIONS = [
     "addedDate": "2026-02-24"
   },
   {
-    "answer": "ㅕㅑ",
+    "answer": "wrap up",
     "prefix": "",
     "suffix": "",
     "meaning": "",
     "translation": "",
-    "addedDate": "2026-02-25"
+    "addedDate": "2026-02-24"
   },
   {
-    "answer": "ji",
+    "answer": "walk through",
     "prefix": "",
     "suffix": "",
     "meaning": "",
     "translation": "",
-    "addedDate": "2026-02-26"
-  },
-  {
-    "answer": "유우",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-02-27"
-  },
-  {
-    "answer": "칸초2",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-02"
-  },
-  {
-    "answer": "you",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-03"
-  },
-  {
-    "answer": "ㅇㅇㅇ",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-04"
-  },
-  {
-    "answer": "안녕",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-05"
-  },
-  {
-    "answer": "유버디2",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-06"
-  },
-  {
-    "answer": "ㅇㄹㅇ",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-09"
-  },
-  {
-    "answer": "Qwe",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-10"
-  },
-  {
-    "answer": "0127-test",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-11"
-  },
-  {
-    "answer": "222",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-12"
-  },
-  {
-    "answer": "22",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-13"
-  },
-  {
-    "answer": "Qwe",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-16"
-  },
-  {
-    "answer": "유버디",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-17"
-  },
-  {
-    "answer": "유버디 테스트",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-18"
-  },
-  {
-    "answer": "jeongeun",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-19"
-  },
-  {
-    "answer": "이예은",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-20"
-  },
-  {
-    "answer": "Rosa Woo",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-23"
-  },
-  {
-    "answer": "혜림 강",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-24"
-  },
-  {
-    "answer": "김신혜",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-25"
-  },
-  {
-    "answer": "지윤",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-26"
-  },
-  {
-    "answer": "백서연",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-27"
-  },
-  {
-    "answer": "Wonmi Kim",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-30"
-  },
-  {
-    "answer": "김가연",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-03-31"
-  },
-  {
-    "answer": "Jennie Lee",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-01"
-  },
-  {
-    "answer": "고킵고밍",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-02"
-  },
-  {
-    "answer": "Emilie",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-03"
-  },
-  {
-    "answer": "정은",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-06"
-  },
-  {
-    "answer": "Lena",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-07"
-  },
-  {
-    "answer": "Mowa",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-08"
-  },
-  {
-    "answer": "jeonghoon",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-09"
-  },
-  {
-    "answer": "RAM",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-10"
-  },
-  {
-    "answer": "김혜진",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-13"
-  },
-  {
-    "answer": "Hana",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-14"
-  },
-  {
-    "answer": "Sunyoung Jea",
-    "prefix": "",
-    "suffix": "",
-    "meaning": "",
-    "translation": "",
-    "addedDate": "2026-04-15"
+    "addedDate": "2026-02-24"
   }
 ];
