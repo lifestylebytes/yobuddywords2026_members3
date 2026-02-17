@@ -155,8 +155,30 @@ function mapPageToEntry(page) {
         prefix = fullSentence.slice(0, idx).replace(/\s+/g, ' ');
         suffix = fullSentence.slice(idx + match[0].length).replace(/\s+/g, ' ');
       } else {
-        // If exact match not found, leave full sentence as suffix
-        suffix = fullSentence;
+        // Try a fuzzy in-order match for multi-word answers where words
+        // may be separated by small words (e.g. "put me through" vs "put through")
+        const answerWords = (answer || '').split(/\s+/).filter(Boolean);
+        if (answerWords.length > 1) {
+          // build a regex like: \bword1\b(?:\s+\w+){0,3}?\s+\bword2\b ...
+          const parts = answerWords.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+          const fuzzy = parts.map(p => `\\b${p}\\b`).join('(?:[\\s\\w]{0,20}?)');
+          try {
+            const re = new RegExp(fuzzy, 'i');
+            const m2 = re.exec(fullSentence);
+            if (m2) {
+              const idx2 = m2.index;
+              prefix = fullSentence.slice(0, idx2).replace(/\s+/g, ' ');
+              suffix = fullSentence.slice(idx2 + m2[0].length).replace(/\s+/g, ' ');
+            } else {
+              suffix = fullSentence;
+            }
+          } catch (err) {
+            suffix = fullSentence;
+          }
+        } else {
+          // If exact match not found, leave full sentence as suffix
+          suffix = fullSentence;
+        }
       }
     } catch (err) {
       suffix = fullSentence;
