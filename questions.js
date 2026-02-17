@@ -98,17 +98,17 @@ const QUESTIONS = [
     "addedDate": "2026-02-09"
   },
   {
-    "answer": "tight deadline",
+    "answer": "tight deadlines",
     "prefix": "We already have a lot of tasks on our plate with",
-    "suffix": "s.",
+    "suffix": ".",
     "meaning": "",
     "translation": "우리는 이미 촉박한 마감이 있는 업무가 많이 쌓여 있어요.",
     "addedDate": "2026-02-09"
   },
   {
-    "answer": "prioritize",
-    "prefix": "",
-    "suffix": "I am prioritizing tasks that have already been scheduled.",
+    "answer": "prioritizing",
+    "prefix": "I am",
+    "suffix": "tasks that have already been scheduled.",
     "meaning": "",
     "translation": "이미 일정이 잡혀 있는 업무에 우선순위를 두고 있어요.",
     "addedDate": "2026-02-09"
@@ -139,8 +139,8 @@ const QUESTIONS = [
   },
   {
     "answer": "work around",
-    "prefix": "",
-    "suffix": "Let's find a workaround for now.",
+    "prefix": "Let's find a",
+    "suffix": "for now.",
     "meaning": "",
     "translation": "일단은 임시 대안을 찾아보죠.",
     "addedDate": "2026-02-09"
