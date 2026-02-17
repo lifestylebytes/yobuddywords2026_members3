@@ -210,15 +210,17 @@ function setSentence(q) {
   // attach the punctuation to the prefix to avoid it sitting alone.
   // If prefix is empty, keep punctuation in suffix so the blank stays before it.
   const suffixText = q.suffix || "";
-  const prefixText = (q.prefix || "").trim();
+  const prefixText = q.prefix || "";
   if (suffixText && prefixText && /^[\.,!\?:;~\-]/.test(suffixText.trim())) {
     // If suffix begins with punctuation, attach only the punctuation
     // to the prefix so the blank doesn't get separated from the sentence.
     const trimmed = suffixText.trimStart();
     const punct = trimmed[0];
-    // remove the first punctuation character from suffix (preserve following space)
-    const newSuffix = trimmed.slice(1).replace(/^\s+/, " ").trimStart();
-    prefixEl.textContent = `${prefixText}${punct}`;
+    // remove the first punctuation character and preserve following space as suffix
+    const newSuffix = trimmed.slice(1).replace(/^\s+/, " ");
+    // remove any trailing space from prefix before adding punctuation
+    const prefixNoTrailing = prefixText.replace(/\s+$/,'');
+    prefixEl.textContent = `${prefixNoTrailing}${punct}`;
     suffixEl.textContent = newSuffix || "";
   } else {
     prefixEl.textContent = q.prefix || "";

@@ -27,6 +27,9 @@ const QUESTIONS_FILE = path.join(process.cwd(), 'questions.js');
 const argv = require('minimist')(process.argv.slice(2));
 const startDateStr = argv.start || '2026-02-18';
 const doCommit = argv.commit || false;
+const doOverwrite = argv.overwrite || false;
+const baseDay = argv['base-day'] ? parseInt(argv['base-day'], 10) : 10;
+const doDry = argv.dry || false;
 
 function formatDate(d) {
   const y = d.getFullYear();
@@ -97,56 +100,92 @@ function mapPageToEntry(page) {
   const props = page.properties || {};
   // Heuristics for common property names
   const keys = Object.keys(props).map(k => k.toLowerCase());
+  // Prefer specific Korean column names if present in the DB
+  const sentenceKeys = ['예문', 'example', 'sentence'];
+  const translationKeys = ['예문 해석', 'translation', 'translate'];
+  // DB change: previous "뜻 (클릭하면 설명)" renamed to "어휘"; a new "뜻" property exists for definition
+  const answerKeys = ['어휘', '뜻 (클릭하면 설명)', 'meaning', 'vocab', 'word'];
+  const meaningKeys = ['뜻', 'meaning', 'definition', '설명'];
+  const dayKeys = ['day', 'Day', 'Day'];
 
-  // answer: try Title or Name
-  let answer = '';
-  for (const k of Object.keys(props)) {
-    if (/^name$|^title$|^answer$|^word$/i.test(k)) {
-      answer = propText(props[k]);
-      if (answer) break;
-    }
-  }
-  if (!answer) {
-    // fallback to first title-like field
+  function findProp(keysList) {
     for (const k of Object.keys(props)) {
-      if (props[k] && props[k].title) {
-        answer = propText(props[k]);
-        break;
+      for (const candidate of keysList) {
+        if (k.toLowerCase() === candidate.toLowerCase()) return props[k];
       }
     }
+    return null;
   }
 
-  // prefix, suffix, meaning, translation, day
+  const sentenceProp = findProp(sentenceKeys);
+  const translationProp = findProp(translationKeys);
+  const answerProp = findProp(answerKeys);
+  const meaningProp = findProp(meaningKeys);
+  const dayProp = findProp(Object.keys(props));
+
+  const fullSentence = propText(sentenceProp) || '';
+  const translation = propText(translationProp) || '';
+  const meaning = propText(meaningProp) || '';
+
+  // answer: prefer answerProp (new column '어휘'), fall back to old/meaning fields
+  let answer = propText(answerProp) || '';
+  if (!answer) answer = propText(meaningProp) || '';
+
+  // If answer is empty, try to infer from sentence by taking the last token or quoted part
+  if (!answer && fullSentence) {
+    // fallback: pick the shortest word > 2 chars that appears in sentence
+    const tokens = fullSentence.replace(/[.,!?]/g, '').split(/\s+/).filter(t => t.length > 1);
+    if (tokens.length > 0) answer = tokens[Math.floor(tokens.length / 2)];
+  }
+
+  // Build prefix/suffix by locating the answer inside the fullSentence
   let prefix = '';
   let suffix = '';
-  let meaning = '';
-  let translation = '';
-  let dayVal = '';
-
-  for (const k of Object.keys(props)) {
-    const key = k.toLowerCase();
-    const txt = propText(props[k]);
-    if (!txt) continue;
-    if (/^prefix$/i.test(key)) prefix = txt;
-    else if (/^suffix$/i.test(key)) suffix = txt;
-    else if (/^meaning$|^meanings$|^definition$|^note$/i.test(key)) meaning = txt;
-    else if (/^translation$|^translate$|^kr$|^korean$/i.test(key)) translation = txt;
-    else if (/^day$|^daynumber$|^day_number$|^day_no$|^d$/i.test(key)) dayVal = txt;
+  if (answer && fullSentence) {
+    try {
+      const escaped = answer.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp(escaped, 'i');
+      const match = re.exec(fullSentence);
+      if (match) {
+        const idx = match.index;
+        // Preserve the original spacing around the blank so punctuation stays
+        // in the correct place. Do not trim trailing/leading spaces here —
+        // keep the space before the answer as part of prefix and any
+        // following space as part of suffix.
+        prefix = fullSentence.slice(0, idx).replace(/\s+/g, ' ');
+        suffix = fullSentence.slice(idx + match[0].length).replace(/\s+/g, ' ');
+      } else {
+        // If exact match not found, leave full sentence as suffix
+        suffix = fullSentence;
+      }
+    } catch (err) {
+      suffix = fullSentence;
+    }
+  } else {
+    suffix = fullSentence;
   }
 
+  const dayRaw = (function () {
+    for (const k of Object.keys(props)) {
+      if (/^day$/i.test(k)) return propText(props[k]);
+    }
+    return '';
+  })();
+
   return {
-    answer: answer || '',
+    answer: (answer || '').trim(),
+    // preserve prefix/suffix spacing (do not trim) so UI can decide how to attach punctuation
     prefix: prefix || '',
     suffix: suffix || '',
-    meaning: meaning || '',
-    translation: translation || '',
-    dayRaw: dayVal || ''
+    meaning: (meaning || '').trim(),
+    translation: (translation || '').trim(),
+    dayRaw: dayRaw || ''
   };
 }
 
-function computeAddedDateForDay(dayNumber, startDateStr) {
+function computeAddedDateForDay(dayNumber, startDateStr, baseDayNumber = 10) {
   const start = new Date(startDateStr + 'T00:00:00');
-  const offset = Math.max(0, dayNumber - 10);
+  const offset = Math.max(0, dayNumber - baseDayNumber);
   const target = addBusinessDays(start, offset);
   return formatDate(target);
 }
@@ -155,6 +194,49 @@ async function main() {
   console.log('Fetching pages from Notion...');
   const pages = await fetchNotionPages();
   console.log(`Fetched ${pages.length} rows`);
+
+  if (doDry) {
+    // Collect unique property keys and print samples
+    const propKeys = new Set();
+    pages.slice(0, 40).forEach((p, idx) => {
+      const keys = Object.keys(p.properties || {});
+      keys.forEach(k => propKeys.add(k));
+      console.log(`\n--- Page ${idx + 1} properties:`);
+      keys.forEach(k => {
+        const val = propText(p.properties[k]);
+        console.log(`  ${k}: ${val.substring(0, 120)}`);
+      });
+    });
+    console.log('\nUnique property keys found:');
+    console.log(Array.from(propKeys).join(', '));
+    // Also show how pages map to our entry format and computed addedDate
+    console.log('\nSample mapped entries:');
+    const mappedList = pages.map(p => mapPageToEntry(p));
+    mappedList.slice(0, 20).forEach((mapped, idx) => {
+      const dayNumMatch = (mapped.dayRaw && mapped.dayRaw.match(/\d+/));
+      const dayNum = dayNumMatch ? parseInt(dayNumMatch[0], 10) : baseDay;
+      const added = computeAddedDateForDay(dayNum || baseDay, startDateStr, baseDay);
+      console.log(`\nEntry ${idx + 1}:`);
+      console.log(`  answer: ${mapped.answer}`);
+      console.log(`  prefix: ${mapped.prefix}`);
+      console.log(`  suffix: ${mapped.suffix}`);
+      console.log(`  meaning: ${mapped.meaning}`);
+      console.log(`  translation: ${mapped.translation}`);
+      console.log(`  dayRaw: ${mapped.dayRaw}`);
+      console.log(`  -> computed addedDate: ${added}`);
+    });
+
+    // Also summarize visibility up to today (KST)
+    const mappedAll = mappedList.map(m => {
+      const dayNumMatch = (m.dayRaw && m.dayRaw.match(/\d+/));
+      const dayNum = dayNumMatch ? parseInt(dayNumMatch[0], 10) : baseDay;
+      return { ...m, addedDate: computeAddedDateForDay(dayNum || baseDay, startDateStr, baseDay) };
+    });
+    const todayKST = formatDate(new Date(Date.now() + 9 * 60 * 60 * 1000));
+    const visibleCount = mappedAll.filter(x => x.addedDate && x.addedDate <= todayKST).length;
+    console.log(`\nSummary: mapped ${mappedAll.length} entries, ${visibleCount} would be visible up to ${todayKST} (KST) using --start ${startDateStr} and --base-day ${baseDay}`);
+    process.exit(0);
+  }
 
   const entries = pages.map(mapPageToEntry).filter(e => e.answer);
 
@@ -192,49 +274,48 @@ async function main() {
     suffix: e.suffix || '',
     meaning: e.meaning || '',
     translation: e.translation || '',
-    addedDate: computeAddedDateForDay(e.day || 10, startDate)
+    addedDate: computeAddedDateForDay(e.day || baseDay, startDate, baseDay)
   }));
 
-  // Read existing questions.js and append new entries that don't duplicate by answer
+  // Read existing questions.js
   const raw = fs.readFileSync(QUESTIONS_FILE, 'utf8');
-  // Extract existing array by finding the start of `const QUESTIONS = [` and the matching closing `];`
-  const m = raw.match(/const QUESTIONS =\s*\[(?:[\s\S]*?)\];/m);
-  let existing = [];
-  if (m) {
-    const arrText = m[0].replace(/const QUESTIONS =\s*/, '').replace(/;\s*$/, '');
-    try {
-      // unsafe eval: convert JS array to JSON by neutral replacements
-      const jsonText = arrText
-        .replace(/([a-zA-Z0-9_]+)\s*:/g, '"$1":')
-        .replace(/\'|\`/g, '"');
-      existing = JSON.parse(jsonText);
-    } catch (err) {
-      console.warn('Could not parse existing QUESTIONS array; fallback to append-only');
-      existing = [];
+
+  if (doOverwrite) {
+    // Overwrite mode: replace QUESTIONS array entirely with `final` entries
+    const newFileText = raw.replace(/const QUESTIONS =\s*\[(?:[\s\S]*?)\];/m, `const QUESTIONS = ${JSON.stringify(final, null, 2)};`);
+    fs.writeFileSync(QUESTIONS_FILE, newFileText, 'utf8');
+    console.log(`Overwrote ${QUESTIONS_FILE} with ${final.length} entries`);
+  } else {
+    // Append mode: try to parse existing array and merge without duplicates
+    const m = raw.match(/const QUESTIONS =\s*\[(?:[\s\S]*?)\];/m);
+    let existing = [];
+    if (m) {
+      const arrText = m[0].replace(/const QUESTIONS =\s*/, '').replace(/;\s*$/, '');
+      try {
+        const jsonText = arrText
+          .replace(/([a-zA-Z0-9_]+)\s*:/g, '"$1":')
+          .replace(/\'|\`/g, '"');
+        existing = JSON.parse(jsonText);
+      } catch (err) {
+        console.warn('Could not parse existing QUESTIONS array; fallback to append-only');
+        existing = [];
+      }
     }
+
+    const existingAnswers = new Set(existing.map(i => (i.answer || '').trim()));
+    const toAdd = final.filter(i => !existingAnswers.has(i.answer.trim()));
+    const merged = [...existing, ...toAdd];
+    const newFileText = raw.replace(/const QUESTIONS =\s*\[(?:[\s\S]*?)\];/m, `const QUESTIONS = ${JSON.stringify(merged, null, 2)};`);
+    fs.writeFileSync(QUESTIONS_FILE, newFileText, 'utf8');
+    console.log(`Appended ${toAdd.length} new entries to ${QUESTIONS_FILE}`);
   }
-
-  const existingAnswers = new Set(existing.map(i => (i.answer || '').trim()));
-  const toAdd = final.filter(i => !existingAnswers.has(i.answer.trim()));
-
-  const merged = [...existing, ...toAdd];
-
-  // Build replacement text (pretty simple JSON-ish)
-  const newArrayText = JSON.stringify(merged, null, 2)
-    .replace(/"(answer|prefix|suffix|meaning|translation|addedDate)":/g, '  $1:')
-    .replace(/"/g, '"')
-    .replace(/\n/g, '\n');
-
-  const newFileText = raw.replace(/const QUESTIONS =\s*\[(?:[\s\S]*?)\];/m, `const QUESTIONS = ${JSON.stringify(merged, null, 2)};`);
-
-  fs.writeFileSync(QUESTIONS_FILE, newFileText, 'utf8');
-  console.log(`Wrote ${toAdd.length} new entries to ${QUESTIONS_FILE}`);
 
   if (doCommit) {
     const { execSync } = require('child_process');
     try {
+      const numAdded = doOverwrite ? final.length : (typeof toAdd !== 'undefined' ? toAdd.length : 0);
       execSync(`git add ${QUESTIONS_FILE}`);
-      execSync(`git commit -m "chore: sync questions from Notion (${toAdd.length} added)"`);
+      execSync(`git commit -m "chore: sync questions from Notion (${numAdded} added)"`);
       execSync(`git push`);
       console.log('Committed and pushed changes.');
     } catch (err) {
