@@ -171,8 +171,8 @@ const QUESTIONS = [
   },
   {
     "answer": "put through",
-    "prefix": "",
-    "suffix": "Could you put me through to Alex?",
+    "prefix": "Could you ",
+    "suffix": " to Alex?",
     "meaning": "전화를 연결하다",
     "translation": "Alex에게 전화 연결해 주실 수 있나요?",
     "addedDate": "2026-02-18"
@@ -259,8 +259,8 @@ const QUESTIONS = [
   },
   {
     "answer": "walk through",
-    "prefix": "",
-    "suffix": "I'll walk you through the key points.",
+    "prefix": "I'll ",
+    "suffix": " the key points.",
     "meaning": "차근차근 설명하다",
     "translation": "핵심 포인트를 차근차근 설명드릴게요.",
     "addedDate": "2026-02-20"
