@@ -103,17 +103,19 @@ function setupPattern(answer) {
 
   // 🔥 핵심: 글자 단위로 슬롯 구조만 생성
   const chars = trimmed.split("");
-
   chars.forEach((ch) => {
     if (ch === " ") {
       slots.push({ type: "space" });
-    } 
-    else if (ch === "-") {
-      slots.push({ type: "hyphen", value: "-" });
-    } 
-    else {
+    } else if (ch === "-") {
+      // keep hyphen as fixed character (not user-typed)
+      slots.push({ type: "fixed", value: "-" });
+    } else if (/^[a-zA-Z]$/.test(ch)) {
+      // only alphabetic letters require user input
       slots.push({ type: "char" });
       totalSlots++;
+    } else {
+      // punctuation or symbols (.,~ etc.) should be shown but not typed
+      slots.push({ type: "fixed", value: ch });
     }
   });
 
@@ -135,9 +137,9 @@ function renderSlots() {
       span.className = "char-slot space-slot";
       span.textContent = "";
     } 
-    else if (slot.type === "hyphen") {
+    else if (slot.type === "fixed") {
       span.className = "char-slot fixed-slot";
-      span.textContent = "-";
+      span.textContent = slot.value || "";
     } 
     else {
       span.className = "char-slot";
@@ -201,8 +203,15 @@ function setSentence(q) {
   typedRaw = "";
   finished = false;
 
-  prefixEl.textContent = q.prefix || "";
-  suffixEl.textContent = q.suffix || "";
+  // If suffix starts with punctuation, attach it to prefix so it doesn't sit alone
+  const suffixText = q.suffix || "";
+  if (suffixText && /^[\.,!\?:;~\-]/.test(suffixText.trim())) {
+    prefixEl.textContent = `${(q.prefix || "").trim()}${suffixText}`;
+    suffixEl.textContent = "";
+  } else {
+    prefixEl.textContent = q.prefix || "";
+    suffixEl.textContent = q.suffix || "";
+  }
 
   // 예문 해석 + 뜻 : ~ 형태로 보여주기 (뜻은 밑에 + 보라색)
   if (q.translation && q.meaning) {
