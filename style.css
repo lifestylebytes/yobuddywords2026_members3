@@ -376,6 +376,13 @@ body {
   display: none !important;
 }
 
+/* Temporarily hide Final Test and Beta UI */
+.final-link-wrap,
+.beta-link,
+.voice-beta {
+  display: none !important;
+}
+
 /* ---------- 애니메이션 ---------- */
 
 .card.shake {

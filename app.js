@@ -421,7 +421,8 @@ function resetAll() {
 
 function updateFinalLinkVisibility() {
   if (!finalLinkWrap) return;
-  finalLinkWrap.classList.remove("hidden");
+  // Temporarily keep Final Test link hidden per request
+  finalLinkWrap.classList.add("hidden");
 }
 
 // 🔤 실제로 한 글자 입력 처리 (PC/모바일 공통)

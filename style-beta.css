@@ -109,6 +109,11 @@ body {
 
 .badge-text span:first-child {
   font-size: 13px;
+.beta-link,
+.voice-beta,
+.final-link-wrap {
+  display: none !important;
+}
   color: #3f4352;
 }
 
