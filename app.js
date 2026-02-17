@@ -211,17 +211,28 @@ function setSentence(q) {
   // If prefix is empty, keep punctuation in suffix so the blank stays before it.
   const suffixText = q.suffix || "";
   const prefixText = q.prefix || "";
-  if (suffixText && prefixText && /^[\.,!\?:;~\-]/.test(suffixText.trim())) {
-    // If suffix begins with punctuation, attach only the punctuation
-    // to the prefix so the blank doesn't get separated from the sentence.
+  if (suffixText && prefixText) {
     const trimmed = suffixText.trimStart();
-    const punct = trimmed[0];
-    // remove the first punctuation character and preserve following space as suffix
-    const newSuffix = trimmed.slice(1).replace(/^\s+/, " ");
-    // remove any trailing space from prefix before adding punctuation
-    const prefixNoTrailing = prefixText.replace(/\s+$/,'');
-    prefixEl.textContent = `${prefixNoTrailing}${punct}`;
-    suffixEl.textContent = newSuffix || "";
+    if (/^[\.,!\?:;~\-]/.test(trimmed)) {
+      const punct = trimmed[0];
+      // If suffix is only a single punctuation character (e.g. '.')
+      // or prefix already ends with punctuation, leave the punctuation in suffix
+      // so it appears after the blank. Otherwise attach the punctuation to prefix
+      // and keep the rest as suffix.
+      const prefixEndsWithPunct = /[\.,!\?:;~\-]\s*$/.test(prefixText);
+      if (trimmed.length === 1 || prefixEndsWithPunct) {
+        prefixEl.textContent = q.prefix || "";
+        suffixEl.textContent = q.suffix || "";
+      } else {
+        const newSuffix = trimmed.slice(1).replace(/^\s+/, " ");
+        const prefixNoTrailing = prefixText.replace(/\s+$/,'');
+        prefixEl.textContent = `${prefixNoTrailing}${punct}`;
+        suffixEl.textContent = newSuffix || "";
+      }
+    } else {
+      prefixEl.textContent = q.prefix || "";
+      suffixEl.textContent = q.suffix || "";
+    }
   } else {
     prefixEl.textContent = q.prefix || "";
     suffixEl.textContent = q.suffix || "";
