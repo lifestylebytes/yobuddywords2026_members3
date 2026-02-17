@@ -203,10 +203,13 @@ function setSentence(q) {
   typedRaw = "";
   finished = false;
 
-  // If suffix starts with punctuation, attach it to prefix so it doesn't sit alone
+  // If suffix starts with punctuation and there is an existing prefix,
+  // attach the punctuation to the prefix to avoid it sitting alone.
+  // If prefix is empty, keep punctuation in suffix so the blank stays before it.
   const suffixText = q.suffix || "";
-  if (suffixText && /^[\.,!\?:;~\-]/.test(suffixText.trim())) {
-    prefixEl.textContent = `${(q.prefix || "").trim()}${suffixText}`;
+  const prefixText = (q.prefix || "").trim();
+  if (suffixText && prefixText && /^[\.,!\?:;~\-]/.test(suffixText.trim())) {
+    prefixEl.textContent = `${prefixText}${suffixText}`;
     suffixEl.textContent = "";
   } else {
     prefixEl.textContent = q.prefix || "";
