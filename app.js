@@ -92,6 +92,8 @@ function normaliseWithoutSpace(str) {
 // 정답 문자열로부터 슬롯 구조 만들기
 function setupPattern(answer) {
   currentAnswer = answer || "";
+  // store a normalized copy for comparisons (case-insensitive)
+  currentAnswerNormalized = normaliseWithSpace(currentAnswer);
   slots = [];
   totalSlots = 0;
 
@@ -306,9 +308,11 @@ function checkAnswer() {
     suffixEl.textContent = q.suffix || "";
 
 
+  // explicit case-insensitive comparison (normalise functions already lowercase,
+  // but compare defensively)
   const isCorrect =
-    userWithSpace === correctWithSpace ||
-    userNoSpace === correctNoSpace;
+    userWithSpace.toLowerCase() === correctWithSpace.toLowerCase() ||
+    userNoSpace.toLowerCase() === correctNoSpace.toLowerCase();
 
   // ✅ 정답
   if (isCorrect) {
