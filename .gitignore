@@ -2,3 +2,12 @@
 .env.*
 .vercel
 .env*.local
+
+# macOS
+.DS_Store
+
+# node modules
+node_modules/
+
+# local env
+.env.local

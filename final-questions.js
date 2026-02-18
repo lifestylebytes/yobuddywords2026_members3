@@ -6,11 +6,30 @@
       ? QUESTIONS
       : [];
 
+  // Return local date string `YYYY-MM-DD` for comparison with `addedDate` fields
+  function localDateString(d = new Date()) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
+
+  const todayStr = localDateString();
+
+  // Only include items that either don't have `addedDate` or whose `addedDate` is
+  // less than or equal to today's local date. This makes new words appear at
+  // midnight of their `addedDate` in the user's local timezone.
+  const VISIBLE_SOURCE = SOURCE.filter(item => {
+    if (!item || !item.answer) return false;
+    if (!item.addedDate) return true;
+    return item.addedDate <= todayStr;
+  });
+
   function cleanMeaning(text) {
     return (text || "").replace(/^\s*\d+\.\s*/, "").trim();
   }
 
-  const fixedSource = SOURCE.filter(item => item.answer);
+  const fixedSource = VISIBLE_SOURCE.filter(item => item.answer);
   const totalNeeded = 30;
   const truthPattern = [true, false, true, false, true];
   const usedMeanings = new Set();
