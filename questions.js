@@ -440,7 +440,8 @@ const QUESTIONS = [
     "meaning": "[팀/회사]의 [이름]입니다 (콜 시작 소개)",
     "translation": "안녕하세요, 전략팀 민지입니다.",
     "day": 22,
-    "addedDate": "2026-03-06"
+    "addedDate": "2026-03-06",
+    "visible": false
   },
   {
     "answer": "quick call",

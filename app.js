@@ -20,6 +20,11 @@ const AVAILABLE_QUESTIONS = QUESTIONS_SOURCE.filter(
   q => q.addedDate && q.addedDate <= TODAY
 );
 
+// 실제 사용자에게 제시할 문제들 (visible !== false)
+const PLAYABLE_QUESTIONS = AVAILABLE_QUESTIONS.filter(
+  q => q.visible !== false
+);
+
 
 // DOM 요소
 const card = document.getElementById("card");
@@ -60,8 +65,9 @@ function shuffle(array) {
 }
 
 // 세션용 문제 10개 (질문이 10개 미만이면 전체 사용)
+// visible !== false인 항목만 사용
 function pickSessionQuestions(limit = 10) {
-  const copy = [...AVAILABLE_QUESTIONS];
+  const copy = [...PLAYABLE_QUESTIONS];
   shuffle(copy);
   const realLimit = Math.min(limit, copy.length);
   return copy.slice(0, realLimit);
