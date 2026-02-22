@@ -8,7 +8,7 @@ const QUESTIONS = [
     "meaning": "작업을 넘기다",
     "translation": "넘기기 전에 이걸 검토해야 하는지 다시 한번 확인하고 싶어요.",
     "day": 1,
-    "addedDate": "2026-02-05"
+    "addedDate": "2026-02-09"
   },
   {
     "answer": "by any chance",
@@ -17,7 +17,7 @@ const QUESTIONS = [
     "meaning": "혹시",
     "translation": "혹시, 제가 아까 보낸 메시지 확인해 주실 수 있을까요?",
     "day": 1,
-    "addedDate": "2026-02-05"
+    "addedDate": "2026-02-09"
   },
   {
     "answer": "out of scope",
@@ -26,7 +26,7 @@ const QUESTIONS = [
     "meaning": "범위를 벗어난",
     "translation": "사실 범위 밖인 일을 지원해야 할 때 정말 별로예요.",
     "day": 1,
-    "addedDate": "2026-02-05"
+    "addedDate": "2026-02-09"
   },
   {
     "answer": "loop in",
@@ -35,7 +35,7 @@ const QUESTIONS = [
     "meaning": "(대화/메일에) 포함시키다",
     "translation": "추가 논의를 위해 팀 전체를 포함시켜 줄 수 있을까요?",
     "day": 2,
-    "addedDate": "2026-02-06"
+    "addedDate": "2026-02-10"
   },
   {
     "answer": "touch base",
@@ -44,7 +44,7 @@ const QUESTIONS = [
     "meaning": "간단히 연락하다",
     "translation": "회의 전에 간단히 한번 연락하고 싶어요.",
     "day": 2,
-    "addedDate": "2026-02-06"
+    "addedDate": "2026-02-10"
   },
   {
     "answer": "follow up",
@@ -53,7 +53,7 @@ const QUESTIONS = [
     "meaning": "후속 조치하다",
     "translation": "그 부분은 제가 후속 확인하고 다시 연락드릴게요.",
     "day": 2,
-    "addedDate": "2026-02-06"
+    "addedDate": "2026-02-10"
   },
   {
     "answer": "That reminds me",
@@ -62,7 +62,7 @@ const QUESTIONS = [
     "meaning": "그거 보니 생각났는데",
     "translation": "아, 그거 보니 생각났는데. 커피 중독 끊겠다고 나 자신과 약속했거든… 내일부터!",
     "day": 3,
-    "addedDate": "2026-02-09"
+    "addedDate": "2026-02-11"
   },
   {
     "answer": "I've been meaning to",
@@ -71,7 +71,7 @@ const QUESTIONS = [
     "meaning": "~하려고 했었어",
     "translation": "너랑 얘기하려고 했는데, 뇌가 완전히 꺼지기 전에 카페인으로 시동을 좀 걸어야겠어!",
     "day": 3,
-    "addedDate": "2026-02-09"
+    "addedDate": "2026-02-11"
   },
   {
     "answer": "Same old, same old",
@@ -80,7 +80,7 @@ const QUESTIONS = [
     "meaning": "평소랑 똑같아, 그저 그래",
     "translation": "늘 똑같지 뭐, 요즘 꽤 바빠. 너는 어때?",
     "day": 3,
-    "addedDate": "2026-02-09"
+    "addedDate": "2026-02-11"
   },
   {
     "answer": "One thing to consider is",
@@ -89,7 +89,7 @@ const QUESTIONS = [
     "meaning": "고려해볼 점은",
     "translation": "고려해볼 점은 우리 팀의 여유(리소스)예요.",
     "day": 4,
-    "addedDate": "2026-02-10"
+    "addedDate": "2026-02-12"
   },
   {
     "answer": "From my perspective",
@@ -98,7 +98,7 @@ const QUESTIONS = [
     "meaning": "내 관점에서는",
     "translation": "제 관점에서는 일정이 조금 타이트해서, 이번 주 초에 세운 목표를 달성하지 못할 수도 있어요.",
     "day": 4,
-    "addedDate": "2026-02-10"
+    "addedDate": "2026-02-12"
   },
   {
     "answer": "I might be wrong",
@@ -107,7 +107,7 @@ const QUESTIONS = [
     "meaning": "내가 틀릴 수도 있지만",
     "translation": "제가 틀릴 수도 있지만, 이 문서 한번 더 봐주실 수 있을까요?",
     "day": 4,
-    "addedDate": "2026-02-10"
+    "addedDate": "2026-02-12"
   },
   {
     "answer": "tight deadlines",
@@ -116,7 +116,7 @@ const QUESTIONS = [
     "meaning": "촉박한 마감",
     "translation": "우리는 이미 촉박한 마감이 있는 업무가 많이 쌓여 있어요.",
     "day": 5,
-    "addedDate": "2026-02-11"
+    "addedDate": "2026-02-13"
   },
   {
     "answer": "prioritizing",
@@ -125,7 +125,7 @@ const QUESTIONS = [
     "meaning": "우선순위를 정하다",
     "translation": "이미 일정이 잡혀 있는 업무에 우선순위를 두고 있어요.",
     "day": 5,
-    "addedDate": "2026-02-11"
+    "addedDate": "2026-02-13"
   },
   {
     "answer": "bandwidth",
@@ -134,7 +134,7 @@ const QUESTIONS = [
     "meaning": "여유, 시간적 여력",
     "translation": "이 업무는 여유가 있는 사람에게 배정할 수 있어요.",
     "day": 5,
-    "addedDate": "2026-02-11"
+    "addedDate": "2026-02-13"
   },
   {
     "answer": "run into",
@@ -305,7 +305,7 @@ const QUESTIONS = [
     "meaning": "이미 인지했고, 확인/처리할 항목으로 올려둔 상태",
     "translation": "이미 확인 리스트에 올려뒀어요. 이 미팅 끝나고 확인해볼게요.",
     "day": 15,
-    "addedDate": "2026-02-25"
+    "addedDate": "2026-02-23"
   },
   {
     "answer": "Noted",
@@ -314,7 +314,7 @@ const QUESTIONS = [
     "meaning": "확인했고 기억(기록)해둘게요",
     "translation": "확인했어요. 감사합니다. 일정 조정해둘게요.",
     "day": 15,
-    "addedDate": "2026-02-25"
+    "addedDate": "2026-02-23"
   },
   {
     "answer": "Copy that",
@@ -323,7 +323,7 @@ const QUESTIONS = [
     "meaning": "확인했어요. 알겠어요.",
     "translation": "확인했어요. 5시까지 초안 보내드릴게요.",
     "day": 15,
-    "addedDate": "2026-02-25"
+    "addedDate": "2026-02-23"
   },
   {
     "answer": "take the lead",
@@ -332,7 +332,7 @@ const QUESTIONS = [
     "meaning": "(회의/업무) 진행을 맡다",
     "translation": "오늘 미팅은 제가 진행할게요.",
     "day": 16,
-    "addedDate": "2026-02-26"
+    "addedDate": "2026-02-24"
   },
   {
     "answer": "reconvene",
@@ -341,7 +341,7 @@ const QUESTIONS = [
     "meaning": "다시 모이다 / 회의를 재개하다",
     "translation": "10분 후에 다시 모이죠.",
     "day": 16,
-    "addedDate": "2026-02-26"
+    "addedDate": "2026-02-24"
   },
   {
     "answer": "You’re cutting off",
@@ -350,7 +350,7 @@ const QUESTIONS = [
     "meaning": "(상대) 목소리가 끊겨요 / 잘 안 들려요",
     "translation": "목소리가 조금 끊겨요. 다시 한 번 말씀해주실 수 있을까요?",
     "day": 16,
-    "addedDate": "2026-02-26"
+    "addedDate": "2026-02-24"
   },
   {
     "answer": "That’s how the cookie crumbles",
@@ -359,7 +359,7 @@ const QUESTIONS = [
     "meaning": "어쩔 수 없는 일이다, 그런 거지 뭐",
     "translation": "회의 일정이 또 바뀌었네요. 뭐, 어쩔 수 없죠.",
     "day": 17,
-    "addedDate": "2026-02-27"
+    "addedDate": "2026-02-25"
   },
   {
     "answer": "air quality",
@@ -368,7 +368,7 @@ const QUESTIONS = [
     "meaning": "공기질",
     "translation": "오늘 공기질이 꽤 안 좋네요.",
     "day": 17,
-    "addedDate": "2026-02-27"
+    "addedDate": "2026-02-25"
   },
   {
     "answer": "social battery",
@@ -377,7 +377,7 @@ const QUESTIONS = [
     "meaning": "사회적 배터리, 사람 만나며 쓰는 에너지",
     "translation": "오늘은 사회적 배터리가 좀 부족해서, 잠깐 충전이 필요해요.",
     "day": 17,
-    "addedDate": "2026-02-27"
+    "addedDate": "2026-02-25"
   },
   {
     "answer": "proactivity",
@@ -386,7 +386,7 @@ const QUESTIONS = [
     "meaning": "선제 대응, 문제가 생기기 전에 미리 움직임",
     "translation": "제가 미리 대응한 덕분에 지연을 피할 수 있었어요.",
     "day": 18,
-    "addedDate": "2026-03-02"
+    "addedDate": "2026-02-26"
   },
   {
     "answer": "ownership",
@@ -395,7 +395,7 @@ const QUESTIONS = [
     "meaning": "오너십, 끝까지 책임지고 마무리하는 태도",
     "translation": "프로젝트를 책임지고 제때 결과물을 냈어요.",
     "day": 18,
-    "addedDate": "2026-03-02"
+    "addedDate": "2026-02-26"
   },
   {
     "answer": "initiative",
@@ -404,7 +404,7 @@ const QUESTIONS = [
     "meaning": "주도성, 스스로 일을 찾아서 움직이는 힘",
     "translation": "더 단순한 프로세스를 제안하면서 주도성을 보여줬어요.",
     "day": 18,
-    "addedDate": "2026-03-02"
+    "addedDate": "2026-02-26"
   },
   {
     "answer": "by EOD",
@@ -413,7 +413,7 @@ const QUESTIONS = [
     "meaning": "오늘 퇴근 전까지 (End Of Day)",
     "translation": "오늘 퇴근 전까지 업데이트된 자료를 보내드릴게요.",
     "day": 19,
-    "addedDate": "2026-03-03"
+    "addedDate": "2026-02-27"
   },
   {
     "answer": "hard stop",
@@ -422,7 +422,7 @@ const QUESTIONS = [
     "meaning": "(회의/업무) 무조건 끝내야 하는 시간",
     "translation": "4시에 다른 일정이 있어서 꼭 끝내야 해요. 그때까지 마무리할 수 있을까요?",
     "day": 19,
-    "addedDate": "2026-03-03"
+    "addedDate": "2026-02-27"
   },
   {
     "answer": "behind schedule",
@@ -431,7 +431,7 @@ const QUESTIONS = [
     "meaning": "일정이 밀리고 있다",
     "translation": "일정이 조금 밀렸지만, 내일 수정된 ETA를 공유드릴게요.",
     "day": 19,
-    "addedDate": "2026-03-03"
+    "addedDate": "2026-02-27"
   },
   {
     "answer": "This is, from",
@@ -440,8 +440,7 @@ const QUESTIONS = [
     "meaning": "[팀/회사]의 [이름]입니다 (콜 시작 소개)",
     "translation": "안녕하세요, 전략팀 민지입니다.",
     "day": 22,
-    "addedDate": "2026-03-06",
-    "visible": false
+    "addedDate": "2026-03-02"
   },
   {
     "answer": "quick call",
@@ -450,7 +449,7 @@ const QUESTIONS = [
     "meaning": "짧게 통화(잠깐 콜)",
     "translation": "잠깐만 통화 가능하실까요?",
     "day": 22,
-    "addedDate": "2026-03-06"
+    "addedDate": "2026-03-02"
   },
   {
     "answer": "Is now a good time?",
@@ -459,7 +458,7 @@ const QUESTIONS = [
     "meaning": "지금 통화 괜찮으세요?",
     "translation": "지금 2분 정도 통화 괜찮으실까요?",
     "day": 22,
-    "addedDate": "2026-03-06"
+    "addedDate": "2026-03-02"
   },
   {
     "answer": "scope creep",
@@ -468,7 +467,7 @@ const QUESTIONS = [
     "meaning": "(슬쩍슬쩍) 요구사항이 늘어나는 것",
     "translation": "요구사항이 계속 늘어나는 것 같아요. 범위를 다시 맞춰볼까요?",
     "day": 23,
-    "addedDate": "2026-03-09"
+    "addedDate": "2026-03-03"
   },
   {
     "answer": "shake things up",
@@ -477,7 +476,7 @@ const QUESTIONS = [
     "meaning": "변화를 주다, 판을 좀 바꾸다",
     "translation": "변화를 주고 더 단순한 워크플로우를 시도해봐야겠어요.",
     "day": 23,
-    "addedDate": "2026-03-09"
+    "addedDate": "2026-03-03"
   },
   {
     "answer": "raise the bar",
@@ -486,7 +485,7 @@ const QUESTIONS = [
     "meaning": "기준을 올리다, 더 높은 수준을 만들다",
     "translation": "이 결과물은 기준을 좀 더 높여봅시다.",
     "day": 23,
-    "addedDate": "2026-03-09"
+    "addedDate": "2026-03-03"
   },
   {
     "answer": "year-end tax adjustment",
@@ -495,7 +494,7 @@ const QUESTIONS = [
     "meaning": "연말정산",
     "translation": "저희는 연말정산을 어떻게 처리하나요?",
     "day": 24,
-    "addedDate": "2026-03-10"
+    "addedDate": "2026-03-04"
   },
   {
     "answer": "severance pay",
@@ -504,7 +503,7 @@ const QUESTIONS = [
     "meaning": "퇴직금",
     "translation": "한국에서 퇴직금은 어떻게 적용되나요?",
     "day": 24,
-    "addedDate": "2026-03-10"
+    "addedDate": "2026-03-04"
   },
   {
     "answer": "stock options",
@@ -513,7 +512,7 @@ const QUESTIONS = [
     "meaning": "스톡옵션(주식 보상)",
     "translation": "확인차 여쭤보는데, 저희 회사에서 스톡옵션을 제공하나요?",
     "day": 24,
-    "addedDate": "2026-03-10"
+    "addedDate": "2026-03-04"
   },
   {
     "answer": "to confirm",
@@ -522,7 +521,7 @@ const QUESTIONS = [
     "meaning": "확인하자면",
     "translation": "확인차 말씀드리면, 금요일에 릴리즈 맞죠?",
     "day": 25,
-    "addedDate": "2026-03-11"
+    "addedDate": "2026-03-05"
   },
   {
     "answer": "deliverables",
@@ -531,7 +530,7 @@ const QUESTIONS = [
     "meaning": "산출물, 결과물(내가 실제로 제출할 것)",
     "translation": "이번 마일스톤의 산출물은 무엇인가요?",
     "day": 25,
-    "addedDate": "2026-03-11"
+    "addedDate": "2026-03-05"
   },
   {
     "answer": "clarify",
@@ -540,7 +539,7 @@ const QUESTIONS = [
     "meaning": "명확히 하다, 정리해서 확인하다",
     "translation": "확인차 여쭤보는데, 이거 오늘 필요하신가요?",
     "day": 25,
-    "addedDate": "2026-03-11"
+    "addedDate": "2026-03-05"
   },
   {
     "answer": "sign off",
@@ -549,7 +548,7 @@ const QUESTIONS = [
     "meaning": "(최종) 승인/사인오프 하다",
     "translation": "오늘 중으로 이거 승인해 주실 수 있나요?",
     "day": 26,
-    "addedDate": "2026-03-12"
+    "addedDate": "2026-03-06"
   },
   {
     "answer": "No further changes needed.",
@@ -558,7 +557,7 @@ const QUESTIONS = [
     "meaning": "추가 수정 없이 이대로 확정해도 돼요",
     "translation": "더 이상의 수정은 필요 없습니다. 진행해 주세요.",
     "day": 26,
-    "addedDate": "2026-03-12"
+    "addedDate": "2026-03-06"
   },
   {
     "answer": "iterate",
@@ -567,7 +566,7 @@ const QUESTIONS = [
     "meaning": "한 번 더 개선해서 다음 버전으로 가다",
     "translation": "이 피드백을 바탕으로 수정해서 v2를 공유하겠습니다.",
     "day": 26,
-    "addedDate": "2026-03-12"
+    "addedDate": "2026-03-06"
   },
   {
     "answer": "context",
@@ -576,7 +575,7 @@ const QUESTIONS = [
     "meaning": "맥락, 배경 정보",
     "translation": "맥락을 말씀드리면, 클라이언트가 어제 변경을 요청했어요.",
     "day": 28,
-    "addedDate": "2026-03-16"
+    "addedDate": "2026-03-08"
   },
   {
     "answer": "handoff notes",
@@ -585,7 +584,7 @@ const QUESTIONS = [
     "meaning": "인계 노트, 인수인계를 위한 정리 문서",
     "translation": "오늘 퇴근 전까지 인계 노트를 공유할게요.",
     "day": 28,
-    "addedDate": "2026-03-16"
+    "addedDate": "2026-03-08"
   },
   {
     "answer": "open items",
@@ -594,7 +593,7 @@ const QUESTIONS = [
     "meaning": "미해결 항목, 아직 남아 있는 할 일",
     "translation": "아직 처리해야 하는 미해결 항목은 다음과 같습니다.",
     "day": 28,
-    "addedDate": "2026-03-16"
+    "addedDate": "2026-03-08"
   },
   {
     "answer": "in your next role",
@@ -603,7 +602,7 @@ const QUESTIONS = [
     "meaning": "다음 역할/새 직장에서",
     "translation": "새 직무에서도 모든 일이 잘 되길 바랍니다.",
     "day": 29,
-    "addedDate": "2026-03-17"
+    "addedDate": "2026-03-09"
   },
   {
     "answer": "continued success",
@@ -612,7 +611,7 @@ const QUESTIONS = [
     "meaning": "앞으로도 계속 잘 되길 바랍니다 (커리어/성과 톤)",
     "translation": "앞으로도 계속 좋은 성과가 있길 바랍니다.",
     "day": 29,
-    "addedDate": "2026-03-17"
+    "addedDate": "2026-03-09"
   },
   {
     "answer": "best wishes",
@@ -621,6 +620,6 @@ const QUESTIONS = [
     "meaning": "좋은 일만 있길 바라요 (포멀한 축복)",
     "translation": "앞으로의 모든 여정에 좋은 일만 있길 바랍니다.",
     "day": 29,
-    "addedDate": "2026-03-17"
+    "addedDate": "2026-03-09"
   }
 ];
