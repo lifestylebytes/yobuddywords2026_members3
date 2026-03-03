@@ -441,6 +441,7 @@ const QUESTIONS = [
     "translation": "안녕하세요, 전략팀 민지입니다.",
     "day": 22,
     "addedDate": "2026-03-02"
+    ,"visible": false
   },
   {
     "answer": "quick call",
